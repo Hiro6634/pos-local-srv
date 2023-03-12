@@ -1,14 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
+import { ProductService } from '../services/product.service';
 
 @Controller('products')
 export class ProductsController {
-    @Get()
-    getProducts():Product[]{
-        const product: Product = new Product();
-        product.$id = '2';
-        product.$name = 'coca';
 
-        return [product, product]
+    constructor(
+        private readonly productService: ProductService
+    ){}
+    @Get()
+    async getProducts():Promise<Product[]>{
+        return await this.productService.getPorducts();
     }
 }
