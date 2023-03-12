@@ -5,20 +5,22 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { ProductsModule } from './modules/products/products.module';
-import { CategoriesModule } from './modules/categories/categories.module';
 
+import { Product } from './modules/products/entities/product.entity';
+import { CategoriesModule } from './modules/categories/categories.module';
 @Module({
   imports: [
     ProductsModule, 
     ConfigModule.forRoot({
     isGlobal: true,
     }), 
-    CategoriesModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'database.sqlite',
-      
-    }),
+      entities:[Product],
+      synchronize: true
+    }), 
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
